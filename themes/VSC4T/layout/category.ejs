@@ -1,0 +1,56 @@
+<%- partial('_partial/header') %>
+
+<div class="vscode-container">
+  <!-- 左侧资源管理器 -->
+  <div class="sidebar-explorer">
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-folder-open"></i>
+        <span>CATEGORIES</span>
+      </div>
+      <div class="section-content">
+        <% site.categories.sort('name').each(function(category){ %>
+          <a class="category-item <%- page.category === category.name ? 'active' : '' %>" href="<%- url_for(category.path) %>">
+            <i class="fas fa-folder"></i>
+            <span><%= category.name %></span>
+            <span class="count">(<%= category.length %>)</span>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主要内容区域 -->
+  <div class="editor-content">
+    <div class="tab-bar">
+      <div class="tab active">
+        <i class="fas fa-folder-open"></i>
+        <span><%= page.category %>.md</span>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <div class="category-detail">
+        <div class="category-header">
+          <i class="fas fa-folder"></i>
+          <h2><%= page.category %></h2>
+          <span class="count"><%= page.posts.length %> posts</span>
+        </div>
+        <div class="category-posts">
+          <% page.posts.sort('date', -1).each(function(post){ %>
+            <div class="post-item">
+              <i class="fas fa-file-alt"></i>
+              <div class="post-info">
+                <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+                <span class="date">
+                  <i class="fas fa-calendar-alt"></i>
+                  <%= date(post.date, config.date_format) %>
+                </span>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

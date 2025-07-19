@@ -1,0 +1,10 @@
+<% if(page.toc !== false && toc(page.content).length > 0) { %>
+<div class="toc-container">
+  <div class="toc-header">
+    <i class="fas fa-list"></i> 目录
+  </div>
+  <div class="toc-content">
+    <%- toc(page.content, {list_number: false}) %>
+  </div>
+</div>
+<% } %>

@@ -1,0 +1,60 @@
+<%- partial('_partial/header') %>
+
+<div class="container">
+  <div class="series-container">
+    <div class="explorer-title">
+      <i class="fas fa-bookmark"></i> Series Explorer
+    </div>
+    <% 
+    let series = {};
+    site.posts.forEach(function(post){
+      if (post.series) {
+        if (!series[post.series]) {
+          series[post.series] = [];
+        }
+        series[post.series].push(post);
+      }
+    });
+    %>
+    
+    <div class="series-list">
+      <% for (let seriesName in series) { %>
+        <div class="series-item">
+          <div class="series-header" onclick="toggleSeries(this)">
+            <i class="fas fa-chevron-right"></i>
+            <span class="series-name"><%= seriesName %></span>
+            <span class="series-count"><%= series[seriesName].length %> posts</span>
+          </div>
+          <div class="series-posts" style="display: none;">
+            <% series[seriesName].sort((a, b) => b.date - a.date).forEach(function(post) { %>
+              <div class="series-post">
+                <a href="<%- url_for(post.path) %>">
+                  <i class="fas fa-file-code"></i>
+                  <%= post.title %>
+                </a>
+                <span class="post-date"><%= date(post.date, 'YYYY-MM-DD') %></span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleSeries(element) {
+  const postsDiv = element.parentElement.querySelector('.series-posts');
+  const icon = element.querySelector('i');
+  
+  if (postsDiv.style.display === 'none' || !postsDiv.style.display) {
+    postsDiv.style.display = 'block';
+    icon.classList.remove('fa-chevron-right');
+    icon.classList.add('fa-chevron-down');
+  } else {
+    postsDiv.style.display = 'none';
+    icon.classList.remove('fa-chevron-down');
+    icon.classList.add('fa-chevron-right');
+  }
+}
+</script>

@@ -1,0 +1,26 @@
+home: Inicio
+archives: Archivos
+categories: Categorías
+tags: Etiquetas
+about: Acerca de
+search: Buscar
+previous: Anterior
+next: Siguiente
+read_more: Leer más
+
+# Search functionality
+search_placeholder: Escriba para buscar...
+search_no_results: No se encontraron resultados
+search_result: resultado
+search_results: resultados
+search_results_found: Se encontraron %s resultados
+search_in: Buscar en
+search_in_title: Título
+search_in_content: Contenido
+search_in_tags: Etiquetas
+search_in_categories: Categorías
+search_filters: Filtros de búsqueda
+search_recent: Búsquedas recientes
+search_clear: Limpiar
+search_loading: Cargando...
+search_error: Error al cargar los datos de búsqueda

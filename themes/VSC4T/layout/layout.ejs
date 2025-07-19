@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="<%= config.language || 'en' %>">
+  <%- partial('_partial/head') %>
+  <body>
+    <div class="wrapper">
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+      <%- body %>
+    </div>
+    <%- partial('_partial/footer') %>
+    
+    <!-- 全局配置 -->
+    <script>
+      window.HEXO_CONFIG = {
+        language: "<%= config.language || 'en' %>",
+        root: "<%= config.root || '/' %>"
+      };
+      
+      // 特定于搜索的配置
+      window.VSC4T_SEARCH = {
+        root: "<%= config.root || '/' %>"
+      };
+    </script>
+    
+    <script src="<%- url_for('//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js') %>"></script>
+    <script src="<%- url_for('//cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js') %>"></script>
+    <script src="<%- url_for('//cdn.jsdelivr.net/npm/highlight.js@11.7.0/highlight.min.js') %>"></script>
+    <script>hljs.highlightAll();</script>
+    <%- partial('_partial/scripts') %>
+    <script>
+      // 移动端菜单切换
+      $(document).ready(function() {
+        $('.mobile-menu-toggle').click(function() {
+          $('.sidebar-explorer').toggleClass('show');
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+<%- partial('_partial/header') %>
+
+<div class="vscode-container">
+  <!-- 左侧资源管理器 -->
+  <div class="sidebar-explorer">
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-tags"></i>
+        <span>ALL TAGS</span>
+      </div>
+      <div class="section-content">
+        <% site.tags.sort('name').each(function(tag){ %>
+          <div class="tag-item <%- page.tag === tag.name ? 'active' : '' %>">
+            <i class="fas fa-tag"></i>
+            <a href="<%- url_for(tag.path) %>"><%= tag.name %></a>
+            <span class="count">(<%= tag.length %>)</span>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主要内容区域 -->
+  <div class="editor-content">
+    <div class="tab-bar">
+      <div class="tab active">
+        <i class="fas fa-tag"></i>
+        <span>tag: <%= escape(page.tag) %>.md</span>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <div class="tag-header">
+        <h1>
+          <i class="fas fa-tag"></i>
+          Tag: <%= page.tag %>
+        </h1>
+        <span class="tag-count"><%= page.posts.length %> posts</span>
+      </div>
+
+      <div class="posts-container">
+        <% page.posts.each(function(post){ %>
+          <div class="post-card">
+            <div class="post-header">
+              <i class="fas fa-file-alt"></i>
+              <span class="post-title">
+                <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+              </span>
+            </div>
+            
+            <div class="post-meta">
+              <span class="date">
+                <i class="fas fa-calendar-alt"></i>
+                <%- date(post.date, config.date_format) %>
+              </span>
+              <% if(post.categories && post.categories.length){ %>
+                <span class="category">
+                  <i class="fas fa-folder"></i>
+                  <%- list_categories(post.categories, {
+                    show_count: false,
+                    style: 'none',
+                    separator: ' '
+                  }) %>
+                </span>
+              <% } %>
+            </div>
+            
+            <div class="post-excerpt">
+              <%- post.excerpt || strip_html(post.content).substr(0, 200) %>...
+            </div>
+            
+            <div class="post-footer">
+              <a href="<%- url_for(post.path) %>" class="read-more">
+                <i class="fas fa-code"></i>
+                Read More
+              </a>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+
+      <% if (page.total > 1){ %>
+        <nav class="pagination-container">
+          <div class="pagination-info">
+            <i class="fas fa-file-code"></i>
+            Page <%= page.current %> of <%= page.total %>
+          </div>
+          <%- paginator({
+            prev_text: '<i class="fas fa-chevron-left"></i>',
+            next_text: '<i class="fas fa-chevron-right"></i>',
+            mid_size: 1
+          }) %>
+        </nav>
+      <% } %>
+    </div>
+  </div>
+</div>

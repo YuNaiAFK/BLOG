@@ -1,0 +1,307 @@
+<%- partial('_partial/header') %>
+
+<div class="vscode-container">
+  <div class="editor-content">
+    <div class="tab-bar">
+      <div class="tab active">
+        <i class="fas fa-search"></i>
+        <span>Search</span>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <div class="vs-search-header">
+        <h1><i class="fas fa-search"></i> Search</h1>
+        <p>Find anything in the blog</p>
+      </div>
+      
+      <div id="vs-search-container" class="vs-search-container">
+        <div class="vs-search-input-container">
+          <i class="fas fa-search vs-search-icon"></i>
+          <input type="text" id="vs-search-input" class="vs-search-input" placeholder="Enter your search term..." autofocus>
+          <button id="vs-search-clear" class="vs-search-clear">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="vs-search-status-bar">
+          <div class="vs-search-status">
+            <span id="vs-search-counter">0 results</span>
+          </div>
+          <div class="vs-search-commands">
+            <span class="vs-keybind"><span class="vs-key">↑</span><span class="vs-key">↓</span> to navigate</span>
+            <span class="vs-keybind"><span class="vs-key">Enter</span> to select</span>
+          </div>
+        </div>
+        
+        <div id="vs-search-results" class="vs-search-results">
+          <div class="vs-search-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Loading search data...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('vs-search-input');
+    const searchResults = document.getElementById('vs-search-results');
+    const searchClearBtn = document.getElementById('vs-search-clear');
+    
+    if (searchInput && searchResults) {
+      // 确保获得正确的根路径
+      let rootPath = '/';
+      if (window.HEXO_CONFIG && window.HEXO_CONFIG.root) {
+        rootPath = window.HEXO_CONFIG.root;
+      }
+      
+      // 确保根路径以斜杠结尾
+      if (!rootPath.endsWith('/')) {
+        rootPath += '/';
+      }
+      
+      const searchJsonPath = `${rootPath}search.json`;
+      console.log('[VSC4T] Loading search data from:', searchJsonPath);
+      
+      // 显示加载状态
+      searchResults.innerHTML = `<div class="vs-search-loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Loading search data...</span>
+      </div>`;
+      
+      // 加载搜索数据
+      fetch(searchJsonPath)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('[VSC4T] Search data loaded successfully:', data.length, 'entries');
+          // 初始化搜索功能
+          initSearch(data);
+          // 清除加载状态
+          searchResults.innerHTML = '';
+        })
+        .catch(error => {
+          console.error('Error loading search data:', error, 'Path:', searchJsonPath);
+          searchResults.innerHTML = `<div class="vs-no-results">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Error loading search data</span>
+            <div class="vs-error-details">
+              Check that search.json is being generated correctly.<br>
+              Path: ${searchJsonPath}<br>
+              Error: ${error.message}
+            </div>
+          </div>`;
+        });
+    }
+    
+    function initSearch(searchData) {
+      // 清除搜索按钮
+      if (searchClearBtn) {
+        searchClearBtn.addEventListener('click', function() {
+          searchInput.value = '';
+          searchResults.innerHTML = '';
+          searchInput.focus();
+        });
+      }
+      
+      // 搜索输入事件
+      searchInput.addEventListener('input', function() {
+        const query = this.value.trim().toLowerCase();
+        
+        if (!query) {
+          searchResults.innerHTML = '';
+          return;
+        }
+        
+        const results = searchData.filter(item => 
+          (item.title && item.title.toLowerCase().includes(query)) || 
+          (item.content && item.content.toLowerCase().includes(query)) ||
+          (item.tags && item.tags.some(tag => tag.toLowerCase().includes(query))) ||
+          (item.categories && item.categories.some(cat => cat.toLowerCase().includes(query)))
+        );
+        
+        renderResults(results, query);
+      });
+      
+      // 启用键盘导航
+      searchInput.addEventListener('keydown', function(e) {
+        navigateResults(e);
+      });
+    }
+    
+    function renderResults(results, query) {
+      searchResults.innerHTML = '';
+      
+      if (results.length === 0) {
+        searchResults.innerHTML = `<div class="vs-no-results">
+          <i class="fas fa-search"></i>
+          <span>No results found for "${escapeHTML(query)}"</span>
+        </div>`;
+        return;
+      }
+      
+      const searchCounter = document.getElementById('vs-search-counter');
+      if (searchCounter) {
+        searchCounter.textContent = `${results.length} result${results.length !== 1 ? 's' : ''}`;
+      }
+      
+      results.forEach((item, index) => {
+        const resultItem = document.createElement('div');
+        resultItem.className = 'vs-result-item';
+        resultItem.dataset.index = index;
+        
+        // 高亮匹配的文本
+        let titleHtml = highlightText(item.title || '', query);
+        let contentPreview = getContentPreview(item.content || '', query, 150);
+        let contentHtml = highlightText(contentPreview, query);
+        
+        resultItem.innerHTML = `
+          <a href="${item.url}" class="vs-result-link">
+            <div class="vs-result-header">
+              <i class="fas fa-file-alt"></i>
+              <span class="vs-result-title">${titleHtml}</span>
+            </div>
+            <div class="vs-result-preview">${contentHtml}</div>
+            <div class="vs-result-meta">
+              <span class="vs-result-date">
+                <i class="fas fa-calendar-alt"></i> 
+                ${item.date || ''}
+              </span>
+              ${item.tags && item.tags.length ? 
+                `<span class="vs-result-tags">
+                  <i class="fas fa-tags"></i> 
+                  ${item.tags.join(', ')}
+                </span>` : ''}
+            </div>
+          </a>
+        `;
+        
+        searchResults.appendChild(resultItem);
+      });
+      
+      // 为第一个结果添加活动状态
+      if (searchResults.children.length > 0) {
+        searchResults.children[0].classList.add('active');
+      }
+    }
+    
+    function navigateResults(e) {
+      if (!searchResults.children.length || !['ArrowDown', 'ArrowUp', 'Enter'].includes(e.key)) {
+        return;
+      }
+      
+      const activeItem = searchResults.querySelector('.vs-result-item.active');
+      let activeIndex = activeItem ? parseInt(activeItem.dataset.index) : -1;
+      
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          if (activeIndex < searchResults.children.length - 1) {
+            if (activeItem) activeItem.classList.remove('active');
+            searchResults.children[activeIndex + 1].classList.add('active');
+            ensureVisible(searchResults.children[activeIndex + 1]);
+          }
+          break;
+          
+        case 'ArrowUp':
+          e.preventDefault();
+          if (activeIndex > 0) {
+            activeItem.classList.remove('active');
+            searchResults.children[activeIndex - 1].classList.add('active');
+            ensureVisible(searchResults.children[activeIndex - 1]);
+          }
+          break;
+          
+        case 'Enter':
+          e.preventDefault();
+          if (activeItem) {
+            const link = activeItem.querySelector('.vs-result-link');
+            if (link) window.location.href = link.href;
+          }
+          break;
+      }
+    }
+    
+    function ensureVisible(element) {
+      const container = searchResults;
+      const containerTop = container.scrollTop;
+      const containerBottom = containerTop + container.clientHeight;
+      const elementTop = element.offsetTop;
+      const elementBottom = elementTop + element.clientHeight;
+      
+      if (elementTop < containerTop) {
+        container.scrollTop = elementTop;
+      } else if (elementBottom > containerBottom) {
+        container.scrollTop = elementBottom - container.clientHeight;
+      }
+    }
+    
+    function getContentPreview(content, query, maxLength) {
+      if (!content) return '';
+      
+      const lowerContent = content.toLowerCase();
+      const index = lowerContent.indexOf(query.toLowerCase());
+      
+      if (index === -1) {
+        return content.length > maxLength ? content.slice(0, maxLength) + '...' : content;
+      }
+      
+      let start = Math.max(0, index - Math.floor((maxLength - query.length) / 2));
+      let end = Math.min(content.length, start + maxLength);
+      
+      // 如果末尾有更多空间，调整开始位置
+      if (end < content.length) {
+        start = Math.max(0, end - maxLength);
+      }
+      
+      let preview = content.slice(start, end);
+      if (start > 0) preview = '...' + preview;
+      if (end < content.length) preview += '...';
+      
+      return preview;
+    }
+    
+    function highlightText(text, query) {
+      if (!text) return '';
+      
+      const lowerText = text.toLowerCase();
+      const lowerQuery = query.toLowerCase();
+      
+      let result = '';
+      let lastIndex = 0;
+      let index = lowerText.indexOf(lowerQuery);
+      
+      while (index !== -1) {
+        // 添加匹配前的文本
+        result += escapeHTML(text.slice(lastIndex, index));
+        // 添加高亮匹配
+        result += `<span class="vs-highlight">${escapeHTML(text.slice(index, index + query.length))}</span>`;
+        
+        lastIndex = index + query.length;
+        index = lowerText.indexOf(lowerQuery, lastIndex);
+      }
+      
+      // 添加剩余文本
+      result += escapeHTML(text.slice(lastIndex));
+      
+      return result;
+    }
+    
+    function escapeHTML(text) {
+      if (typeof text !== 'string') return '';
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  });
+</script>

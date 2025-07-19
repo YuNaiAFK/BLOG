@@ -1,0 +1,41 @@
+<!-- 代码高亮 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script src="<%- url_for('js/code-copy.js') %>"></script>
+<script src="<%- url_for('js/toc-highlight.js') %>"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightElement(block);
+    });
+  });
+
+  // 平滑滚动函数
+  function smoothScroll(event, target) {
+    event.preventDefault();
+    let targetElement;
+    if (target.startsWith('#')) {
+      const targetId = target.substring(1);
+      targetElement = document.getElementById(targetId);
+    }
+
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 50, // 调整偏移量
+        behavior: 'smooth'
+      });
+    } else {
+      window.location.href = target;
+    }
+  }
+
+  // 监听所有链接点击事件
+  document.addEventListener('click', function(event) {
+    const target = event.target;
+    if (target.tagName === 'A') {
+      const href = target.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        smoothScroll(event, href);
+      }
+    }
+  });
+</script>

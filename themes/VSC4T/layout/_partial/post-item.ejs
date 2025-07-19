@@ -1,0 +1,12 @@
+<a href="<%- url_for(post.path) %>" class="post-item">
+  <div class="post-info">
+    <i class="fas fa-file-alt"></i>
+    <span class="post-title"><%= post.title %></span>
+  </div>
+  <div class="post-meta">
+    <span class="date">
+      <i class="fas fa-calendar-alt"></i>
+      <%= date(post.date, config.date_format) %>
+    </span>
+  </div>
+</a>

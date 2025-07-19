@@ -1,0 +1,26 @@
+home: Home
+archives: Archives
+categories: Categories
+tags: Tags
+about: About
+search: Search
+previous: Previous
+next: Next
+read_more: Read More
+
+# Search functionality
+search_placeholder: Type to search...
+search_no_results: No results found
+search_result: result
+search_results: results
+search_results_found: Found %s results
+search_in: Search in
+search_in_title: Title
+search_in_content: Content
+search_in_tags: Tags
+search_in_categories: Categories
+search_filters: Search Filters
+search_recent: Recent Searches
+search_clear: Clear
+search_loading: Loading...
+search_error: Error loading search data

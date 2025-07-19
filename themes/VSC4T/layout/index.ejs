@@ -1,0 +1,129 @@
+<%- partial('_partial/header') %>
+
+<div class="vscode-container">
+  <div class="sidebar-explorer">
+    <div class="explorer-header">
+      <span class="explorer-title">
+        <i class="fas fa-folder-open"></i> EXPLORER
+      </span>
+    </div>
+    
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-chevron-down"></i>
+        <span>BLOG CONTENTS</span>
+      </div>
+      
+      <div class="section-content">
+        <%_ site.categories.each(function(category){ _%>
+          <div class="folder">
+            <i class="fas fa-folder"></i>
+            <a href="<%- url_for(category.path) %>" class="category-link">
+              <span><%- category.name %></span>
+              <span class="count">(<%- category.length %>)</span>
+            </a>
+          </div>
+        <%_ }); _%>
+      </div>
+    </div>
+    
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-chevron-down"></i>
+        <span>RECENT POSTS</span>
+      </div>
+      
+      <div class="section-content">
+        <%_ site.posts.sort('date', -1).limit(5).each(function(post){ _%>
+          <div class="file">
+            <i class="fas fa-file-code"></i>
+            <a href="<%- url_for(post.path) %>"><%- post.title %></a>
+          </div>
+        <%_ }); _%>
+      </div>
+    </div>
+
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-chevron-down"></i>
+        <span>TAGS</span>
+      </div>
+      
+      <div class="section-content">
+        <% site.tags.sort('name').each(function(tag){ %>
+          <div class="tag-item">
+            <i class="fas fa-tag"></i>
+            <a href="<%- url_for(tag.path) %>"><%= tag.name %></a>
+            <span class="count">(<%= tag.length %>)</span>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="editor-content">
+    <div class="tab-bar">
+      <div class="tab active">
+        <i class="fas fa-home"></i>
+        <span>welcome.md</span>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <div class="posts-container">
+        <%_ page.posts.each(function(post){ _%>
+          <div class="post-card">
+            <div class="post-header">
+              <i class="fas fa-file-alt"></i>
+              <span class="post-title">
+                <a href="<%- url_for(post.path) %>"><%- post.title %></a>
+              </span>
+            </div>
+            
+            <div class="post-meta">
+              <span class="date">
+                <i class="fas fa-calendar-alt"></i>
+                <%- date(post.date, config.date_format) %>
+              </span>
+              <%_ if(post.categories && post.categories.length){ _%>
+                <span class="category">
+                  <i class="fas fa-folder"></i>
+                  <%- list_categories(post.categories, {
+                    show_count: false,
+                    style: 'none',
+                    separator: ' '
+                  }) %>
+                </span>
+              <%_ } _%>
+            </div>
+            
+            <div class="post-excerpt">
+              <%- post.excerpt || strip_html(post.content).substr(0, 200) %>...
+            </div>
+            
+            <div class="post-footer">
+              <a href="<%- url_for(post.path) %>" class="read-more">
+                <i class="fas fa-code"></i>
+                Read More
+              </a>
+            </div>
+          </div>
+        <%_ }); _%>
+      </div>
+      
+      <%_ if (page.total > 1){ _%>
+        <nav class="pagination-container">
+          <div class="pagination-info">
+            <i class="fas fa-file-code"></i>
+            Page <%- page.current %> of <%- page.total %>
+          </div>
+          <%- paginator({
+            prev_text: '<i class="fas fa-chevron-left"></i>',
+            next_text: '<i class="fas fa-chevron-right"></i>',
+            mid_size: 1
+          }) %>
+        </nav>
+      <%_ } _%>
+    </div>
+  </div>
+</div>

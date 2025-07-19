@@ -1,0 +1,26 @@
+home: Trang chủ
+archives: Lưu trữ
+categories: Danh mục
+tags: Thẻ
+about: Giới thiệu
+search: Tìm kiếm
+previous: Trước
+next: Tiếp
+read_more: Đọc thêm
+
+# Search functionality
+search_placeholder: Nhập để tìm kiếm...
+search_no_results: Không tìm thấy kết quả
+search_result: kết quả
+search_results: kết quả
+search_results_found: Tìm thấy %s kết quả
+search_in: Tìm trong
+search_in_title: Tiêu đề
+search_in_content: Nội dung
+search_in_tags: Thẻ
+search_in_categories: Danh mục
+search_filters: Bộ lọc tìm kiếm
+search_recent: Tìm kiếm gần đây
+search_clear: Xóa
+search_loading: Đang tải...
+search_error: Lỗi khi tải dữ liệu tìm kiếm

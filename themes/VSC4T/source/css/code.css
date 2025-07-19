@@ -1,0 +1,107 @@
+/* code.css：负责
+
+代码块的基本结构和布局
+标题栏的基本样式
+行号样式
+语法高亮颜色定义 */
+
+
+
+
+
+
+/* 代码块容器 */
+figure.highlight {
+  margin: 2em 0;
+  background: #2b2b2b;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+/* 行号pre样式 - 修复宽度问题 */
+.line-numbers-pre {
+  padding: 4px 6px; /* 减小垂直内边距与code-content保持一致 */
+  margin: 0;
+  background: #252526;
+  border-right: 1px solid #404040;
+  color: #858585;
+  user-select: none;
+  text-align: right;
+  min-width: auto; /* 移除最小宽度限制 */
+  width: auto; /* 根据内容自动调整宽度 */
+  flex-shrink: 0; /* 防止被压缩 */
+  overflow-y: hidden;
+  box-sizing: border-box; /* 确保边框盒模型一致 */
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* 行号内的每个数字样式 */
+.line-numbers-pre .line-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  /* height: 1.5em; */ /* 移除固定高度，避免空间浪费 */
+  /* min-height: 1.5em; */ /* 改用最小高度 - 注释掉此行 */
+  display: block;
+  padding-right: 0.5em; /* 确保数字右侧有适当空间 */
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  white-space: nowrap;
+  box-sizing: border-box; /* 确保盒模型一致 */
+}
+
+/* 代码内容pre样式优化 */
+.code-content {
+  padding: 4px 8px; /* 减小垂直内边距以适应少行代码 */
+  margin: 0;
+  flex-shrink: 1; /* 允许在必要时收缩 */
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #d4d4d4;
+  background: #1e1e1e;
+  width: 0; /* 关键修改: 初始宽度为0，依靠flex-grow扩展 */
+  min-width: 0; /* 确保可以收缩到容器大小 */
+  box-sizing: border-box; /* 确保边框盒模型一致 */
+}
+
+/* 超长代码换行控制 */
+.code-content code {
+  white-space: pre;
+  word-wrap: normal;
+  tab-size: 4;
+  line-height: 1.5;
+}
+
+/* 确保代码内容中的每一行与行号对齐 */
+.code-content .line {
+  /* min-height: 1.5em; */ /* 改为最小高度而非固定高度 - 注释掉此行 */
+  line-height: 1.5;
+  margin: 0; /* 确保没有外边距 */
+  padding: 0; /* 确保没有内边距 */
+  box-sizing: border-box; /* 确保边框盒模型一致 */
+}
+
+/* 改进code-pre-wrapper布局 */
+.code-pre-wrapper {
+  display: flex;
+  overflow: hidden;
+  background: #2b2b2b;
+  width: 100%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  /* align-items: stretch; /* 改为stretch让所有元素高度一致 */
+  align-items: flex-start; /* 修改对齐方式 */
+  min-height: 0; /* 确保能够正确计算高度 */
+  height: auto !important;
+  position: relative; /* 为复制按钮提供定位上下文 */
+  margin: 0; /* 确保没有外边距 */
+  padding: 0; /* 确保没有内边距 */
+  box-sizing: border-box; /* 确保边框盒模型一致 */
+}

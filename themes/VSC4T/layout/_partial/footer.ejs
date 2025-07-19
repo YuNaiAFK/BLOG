@@ -1,0 +1,24 @@
+<footer class="footer">
+  <div class="status-bar">
+    <div class="status-item">
+      <i class="fas fa-code-branch"></i>
+      master
+    </div>
+    <div class="status-item">
+      <i class="fas fa-sync"></i>
+      <%= config.author %>
+    </div>
+    <div class="status-item">
+      <i class="fas fa-clock"></i>
+      <%= date(Date.now(), 'YYYY-MM-DD') %>
+    </div>
+    <div class="status-item">
+      Designed By&nbsp; <a href="https://github.com/B143KC47" target="_blank"> BlackCat</a>
+    </div>
+    <div class="status-item github">
+      <a href="<%= config.github || '#' %>" target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+  </div>
+</footer>

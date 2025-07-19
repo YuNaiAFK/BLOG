@@ -1,0 +1,81 @@
+<%- partial('_partial/header') %>
+
+<%
+// Group tags by first letter
+const sortedTags = site.tags.sort('name');
+const groupedTags = {};
+
+sortedTags.each(function(tag) {
+  let firstLetter = tag.name.charAt(0).toUpperCase();
+  if (!/^[A-Z]$/.test(firstLetter)) {
+    firstLetter = '#'; // Group non-alphabetic tags under '#'
+  }
+  if (!groupedTags[firstLetter]) {
+    groupedTags[firstLetter] = [];
+  }
+  groupedTags[firstLetter].push(tag);
+});
+
+const sortedKeys = Object.keys(groupedTags).sort((a, b) => {
+  if (a === '#') return 1; // Put '#' at the end
+  if (b === '#') return -1;
+  return a.localeCompare(b); // Sort letters alphabetically
+});
+%>
+
+<div class="vscode-container">
+  <div class="sidebar-explorer">
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-tags"></i>
+        <span>ALL TAGS</span>
+      </div>
+      <div class="section-content tag-sidebar-list">
+        <% sortedKeys.forEach(function(letter) { %>
+          <div class="tag-group-sidebar">
+            <div class="tag-group-header-sidebar"><%= letter %></div>
+            <% groupedTags[letter].forEach(function(tag) { %>
+              <a class="tag-item" href="<%- url_for(tag.path) %>">
+                <i class="fas fa-tag"></i>
+                <span><%= tag.name %></span>
+                <span class="count"><%= tag.length %></span>
+              </a>
+            <% }) %>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="editor-content">
+    <div class="tab-bar">
+      <div class="tab active">
+        <i class="fas fa-tags"></i>
+        <span>tags.md</span>
+        <span class="tab-count"><%= site.tags.length %></span>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <div class="tags-overview">
+        <h1><i class="fas fa-tags"></i> All Tags</h1>
+        <div class="tags-cloud">
+          <% sortedKeys.forEach(function(letter) { %>
+            <div class="tag-group">
+              <h2 class="tag-group-header"><%= letter %></h2>
+              <div class="tag-group-list">
+                <% groupedTags[letter].forEach(function(tag) { %>
+                  <a class="tag-link" href="<%- url_for(tag.path) %>">
+                    <i class="fas fa-tag"></i>
+                    <%= tag.name %>
+                    <span class="count"><%= tag.length %></span>
+                  </a>
+                <% }) %>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

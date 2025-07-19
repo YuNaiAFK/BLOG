@@ -1,0 +1,133 @@
+<%- partial('_partial/header') %>
+
+<div class="vscode-container">
+  <!-- Left sidebar explorer -->
+  <div class="sidebar-explorer">
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-search"></i>
+        <span><%= __('search_filters').toUpperCase() %></span>
+      </div>
+      <div class="section-content">
+        <div class="search-filters">
+          <div class="filter-group">
+            <div class="filter-title"><%= __('search_in') %></div>
+            <div class="filter-item">
+              <input type="checkbox" id="search-titles" checked>
+              <label for="search-titles"><%= __('search_in_title') %></label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="search-content" checked>
+              <label for="search-content"><%= __('search_in_content') %></label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="search-tags" checked>
+              <label for="search-tags"><%= __('search_in_tags') %></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-history"></i>
+        <span><%= __('search_recent').toUpperCase() %></span>
+      </div>
+      <div class="section-content">
+        <div id="recent-searches">
+          <!-- Recent searches will be populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content area -->
+  <div class="editor-content">
+    <div class="tab-bar">
+      <div class="tab active">
+        <i class="fas fa-search"></i>
+        <span>search.md</span>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <div class="vs-search-header">
+        <h1><i class="fas fa-search"></i> <%= __('search') %></h1>
+        <p><%= __('search_placeholder') %></p>
+      </div>
+      
+      <div id="vs-search-container" class="vs-search-container">
+        <div class="vs-search-input-container">
+          <i class="fas fa-search vs-search-icon"></i>
+          <input type="text" id="vs-search-input" class="vs-search-input" placeholder="<%= __('search_placeholder') %>" autofocus>
+          <button id="vs-search-clear" class="vs-search-clear">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="vs-search-status-bar">
+          <div class="vs-search-status">
+            <span id="vs-search-counter">0 <%= __('search_results') %></span>
+          </div>
+          <div class="vs-search-commands">
+            <span class="vs-keybind"><span class="vs-key">↑</span><span class="vs-key">↓</span> to navigate</span>
+            <span class="vs-keybind"><span class="vs-key">Enter</span> to select</span>
+            <span class="vs-keybind"><span class="vs-key">Esc</span> to <%= __('search_clear').toLowerCase() %></span>
+          </div>
+        </div>
+        
+        <div id="vs-search-results" class="vs-search-results">
+          <div class="vs-search-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span><%= __('search_loading') || 'Loading search data...' %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 确保搜索配置在 search.js 加载前可用
+  window.HEXO_CONFIG = {
+    language: "<%= config.language || 'en' %>",
+    root: "<%= config.root || '/' %>",
+    search_placeholder: "<%- __('search_placeholder') %>",
+    search_no_results: "<%- __('search_no_results') %>",
+    search_results: "<%- __('search_results') %>",
+    search_result: "<%- __('search_result') %>",
+    search_loading: "<%- __('search_loading') %>",
+    search_error: "<%- __('search_error') %>"
+  };
+
+  // 特定于搜索的配置
+  window.VSC4T_SEARCH = {
+    root: "<%= config.root || '/' %>"
+  };
+</script>
+
+<script src="<%- url_for('js/search.js') %>"></script>
+
+<script>
+  // Reset search on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('vs-search-input');
+    if (searchInput) {
+      // Focus the search input
+      setTimeout(() => searchInput.focus(), 100);
+      
+      // Clear search with Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && document.activeElement === searchInput) {
+          searchInput.value = '';
+          const event = new Event('input');
+          searchInput.dispatchEvent(event);
+        }
+      });
+    }
+    
+    // 检查搜索数据可用性
+    console.log('[VSC4T] 搜索初始化完成，搜索路径：', window.VSC4T_SEARCH.root + 'search.json');
+  });
+</script>

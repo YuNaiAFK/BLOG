@@ -1,0 +1,105 @@
+# Theme configuration file
+
+# 基本信息
+name: BlackCat
+description: A simple dark Hexo theme inspired by code.
+author: BlackCat
+
+# 菜单配置
+menu:
+  首页: /
+  归档: /archives/
+  分类: /categories/
+  标签: /tags/
+  关于: /about/
+  搜索: /search/
+
+# 样式配置
+style:
+  # 主题色（代码编辑器深色主题）
+  theme_color: '#1e1e1e'
+  # 链接色
+  link_color: '#569cd6'
+  # 强调色
+  accent_color: '#608b4e'
+  # 字体
+  font_family: 'JetBrains Mono, Consolas, Monaco, monospace'
+  # 背景色
+  background_color: '#252526'
+  # 文本色
+  text_color: '#d4d4d4'
+
+# 侧边栏配置
+sidebar:
+  # 显示侧边栏
+  enabled: true
+  # 侧边栏位置 (left or right)
+  position: left
+  # 移动端侧边栏
+  mobile:
+    # 移动端下是否显示侧边栏
+    enabled: false
+    # 显示汉堡菜单
+    hamburger: true
+
+# 移动端配置
+mobile:
+  # 启用移动端优化
+  enabled: true
+  # 断点（小于此宽度应用移动端样式）
+  breakpoint: 768
+  # 缩放适应
+  scale_fix: true
+  # 导航栏样式 (dropdown, drawer)
+  nav_style: 'drawer'
+  # 字体大小调整
+  font_size_adjust: 0.9
+  # 内容宽度百分比
+  content_width: 100%
+  # 移动端下隐藏元素
+  hide_elements: ['sidebar-toc']
+  # 移动端特殊样式
+  custom_style: true
+  # 移动端触摸优化
+  touch_optimization: true
+  # 移动端代码块优化
+  code_optimization: true
+
+# 代码高亮设置
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: true
+  tab_replace: '  '
+  wrap: true
+  hljs: true  # 关闭 highlight.js
+
+prismjs:
+  enable: true 
+
+# 代码块设置
+code_block:
+  copy_button: true
+  line_number: true
+  max_height: 500
+  custom_font: true
+
+# 首页文章数量
+index_posts: 10
+
+# 开启 MathJax 数学公式支持
+mathjax: true
+
+# 社交链接
+social:
+  github: your_github_username
+  twitter: your_twitter_username
+  email: your_email@example.com
+
+# 自定义 CSS 和 JS
+custom_css:
+  - /css/mobile.css
+custom_js:
+  - /js/code-copy.js
+  - /js/mobile-menu.js
+  - /js/code-enhance.js

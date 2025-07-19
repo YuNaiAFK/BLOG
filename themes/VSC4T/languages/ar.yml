@@ -1,0 +1,26 @@
+home: الرئيسية
+archives: الأرشيف
+categories: التصنيفات
+tags: الوسوم
+about: حول
+search: بحث
+previous: السابق
+next: التالي
+read_more: اقرأ المزيد
+
+# Search functionality
+search_placeholder: اكتب للبحث...
+search_no_results: لم يتم العثور على نتائج
+search_result: نتيجة
+search_results: نتائج
+search_results_found: تم العثور على %s نتائج
+search_in: البحث في
+search_in_title: العنوان
+search_in_content: المحتوى
+search_in_tags: الوسوم
+search_in_categories: التصنيفات
+search_filters: تصفية البحث
+search_recent: عمليات البحث الأخيرة
+search_clear: مسح
+search_loading: جار التحميل...
+search_error: خطأ في تحميل بيانات البحث

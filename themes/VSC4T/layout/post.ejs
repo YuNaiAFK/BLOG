@@ -1,0 +1,129 @@
+<%- partial('_partial/header') %>
+
+<div class="vscode-container">
+  <!-- 左侧资源管理器 -->
+  <div class="sidebar-explorer">
+    <!-- TOC导航 -->
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-list"></i>
+        <span>TABLE OF CONTENTS</span>
+      </div>
+      <div class="section-content">
+        <%- toc(page.content, {list_number: false}) %>
+      </div>
+    </div>
+    
+    <!-- 同分类文章 -->
+    <% if (page.categories && page.categories.length) { %>
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-folder"></i>
+        <span>CATEGORY POSTS</span>
+      </div>
+      <div class="section-content">
+        <% 
+          // 获取当前文章的第一个分类
+          var currentCategory = page.categories.data[0];
+          if (currentCategory) {
+            // 获取该分类下的所有文章
+            var categoryPosts = site.categories.findOne({name: currentCategory.name}).posts.sort('date', -1);
+            // 限制显示数量，并过滤掉当前文章
+            categoryPosts.filter(post => post._id !== page._id).limit(8).each(function(post) { 
+        %>
+          <div class="file">
+            <i class="fas fa-file-code"></i>
+            <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+          </div>
+        <% })} %>
+      </div>
+    </div>
+    <% } %>
+    
+    <!-- 标签列表 -->
+    <% if (page.tags && page.tags.length) { %>
+    <div class="explorer-section">
+      <div class="section-header">
+        <i class="fas fa-tags"></i>
+        <span>ARTICLE TAGS</span>
+      </div>
+      <div class="section-content">
+        <% page.tags.each(function(tag){ %>
+          <div class="tag-item">
+            <i class="fas fa-tag"></i>
+            <a href="<%- url_for(tag.path) %>"><%= tag.name %></a>
+            <span class="count">(<%= tag.posts.length %>)</span>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    <% } %>
+  </div>
+
+  <!-- 主要内容区域 -->
+  <div class="editor-content">
+    <div class="tab-bar">
+      <div class="tab active">
+        <i class="fas fa-file-alt"></i>
+        <span><%= page.title %>.md</span>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <article class="post-content">
+        <div class="post-header">
+          <h1><%= page.title %></h1>
+          <div class="post-meta">
+            <span class="date">
+              <i class="fas fa-calendar-alt"></i>
+              <%= date(page.date, config.date_format) %>
+            </span>            <% if (page.categories && page.categories.length) { %>
+              <span class="categories">
+                <i class="fas fa-folder"></i>
+                <div class="categories-list">
+                  <%- list_categories(page.categories, {
+                    show_count: false,
+                    style: 'list',
+                    class: 'category-item-post'
+                  }) %>
+                </div>
+              </span>
+            <% } %>
+            <% if (page.tags && page.tags.length) { %>
+              <span class="tags">
+                <i class="fas fa-tags"></i>
+                <div class="tags-list">
+                  <%- list_tags(page.tags, {
+                    show_count: false,
+                    style: 'list',
+                    class: 'tag-item-post'
+                  }) %>
+                </div>
+              </span>
+            <% } %>
+          </div>
+        </div>
+        
+        <div class="post-body vscode-markdown">
+          <%- page.content %>
+        </div>
+        
+        <!-- 文章导航 -->
+        <nav class="post-nav">
+          <% if (page.prev) { %>
+            <a class="prev" href="<%- url_for(page.prev.path) %>">
+              <i class="fas fa-chevron-left"></i>
+              <%= page.prev.title %>
+            </a>
+          <% } %>
+          <% if (page.next) { %>
+            <a class="next" href="<%- url_for(page.next.path) %>">
+              <%= page.next.title %>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          <% } %>
+        </nav>
+      </article>
+    </div>
+  </div>
+</div>

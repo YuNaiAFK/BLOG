@@ -1,0 +1,25 @@
+home: 首页
+archives: 归档
+categories: 分类
+tags: 标签
+about: 关于
+search: 搜索
+previous: 上一篇
+next: 下一篇
+read_more: 阅读更多
+
+# 搜索功能
+search_placeholder: 输入关键词搜索...
+search_no_results: 未找到相关结果
+search_results_found: 找到 %s 个结果
+search_results: 搜索结果
+search_in: 搜索范围
+search_in_title: 标题
+search_in_content: 内容
+search_in_tags: 标签
+search_in_categories: 分类
+search_filters: 搜索过滤器
+search_recent: 最近搜索
+search_clear: 清除
+search_loading: 加载中...
+search_error: 加载搜索数据时出错

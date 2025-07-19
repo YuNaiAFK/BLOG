@@ -1,0 +1,116 @@
+:root
+  --editor-bg: #1e1e1e
+  --tab-bg: #2d2d2d
+  --tab-active: #1e1e1e
+  --tab-border: #404040
+  --text-normal: #d4d4d4
+  --text-accent: #569cd6
+  --icon-color: #569cd6
+
+.vs-header
+  background: var(--editor-bg)
+  border-bottom: 1px solid var(--tab-border)
+  position: fixed
+  width: 100%
+  top: 0
+  z-index: 1000
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2)
+
+.vs-nav
+  max-width: 1200px
+  margin: 0 auto
+  height: 48px
+  display: flex
+  align-items: center
+  justify-content: space-between
+  padding: 0 16px
+  position: relative
+  
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    height: 2px
+    background: linear-gradient(90deg, 
+      var(--text-accent) var(--scroll-percent, 0%),
+      transparent var(--scroll-percent, 0%))
+
+.nav-brand
+  color: var(--text-normal)
+  display: flex
+  align-items: center
+  gap: 8px
+  text-decoration: none
+  padding: 0 12px
+  height: 100%
+  position: relative
+  font-family: 'Consolas', monospace
+  
+  i
+    color: var(--icon-color)
+    font-size: 16px
+
+.nav-item
+  height: calc(100% - 1px)
+  padding: 0 16px
+  color: var(--text-normal)
+  display: flex
+  align-items: center
+  gap: 6px
+  text-decoration: none
+  position: relative
+  font-size: 13px
+  background: var(--tab-bg)
+  border: 1px solid var(--tab-border)
+  border-bottom: none
+  margin: 0 1px
+  transition: all 0.2s ease
+  
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: -1px
+    width: calc(100% + 2px)
+    height: 1px
+    background: var(--text-accent)
+    opacity: 0
+    transition: opacity 0.2s
+
+  &:hover
+    background: var(--tab-active)
+    
+    &::before
+      opacity: 1
+
+  &.active
+    background: var(--tab-active)
+    border-top: 1px solid var(--text-accent)
+    
+    &::before
+      opacity: 1
+    
+    i
+      color: var(--text-accent)
+
+  i
+    font-size: 14px
+    color: #858585
+    transition: color 0.2s
+
+  span
+    font-family: 'Consolas', monospace
+    font-size: 13px
+
+// 响应式设计
+@media (max-width: 768px)
+  .nav-item span
+    display: none
+  
+  .nav-item
+    padding: 0 12px
+
+  .nav-brand span
+    display: none

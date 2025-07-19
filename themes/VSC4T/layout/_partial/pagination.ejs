@@ -1,0 +1,31 @@
+<% if (page.total > 1) { %>
+<nav class="pagination-container">
+  <div class="pagination-info">
+    <i class="fas fa-file-code"></i>
+    Page <%= page.current %> of <%= page.total %>
+  </div>
+  <div class="pagination">
+    <% if (page.prev) { %>
+      <a class="page-btn prev" href="<%- url_for(page.prev_link) %>">
+        <i class="fas fa-chevron-left"></i>
+      </a>
+    <% } %>
+    
+    <% var i = 1 %>
+    <% while (i <= page.total) { %>
+      <% if (i === page.current) { %>
+        <span class="page-btn current"><%= i %></span>
+      <% } else { %>
+        <a class="page-btn" href="<%- url_for(i === 1 ? '/' : '/page/' + i) %>"><%= i %></a>
+      <% } %>
+      <% i++ %>
+    <% } %>
+    
+    <% if (page.next) { %>
+      <a class="page-btn next" href="<%- url_for(page.next_link) %>">
+        <i class="fas fa-chevron-right"></i>
+      </a>
+    <% } %>
+  </div>
+</nav>
+<% } %>

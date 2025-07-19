@@ -1,0 +1,26 @@
+home: Главная
+archives: Архив
+categories: Категории
+tags: Теги
+about: О нас
+search: Поиск
+previous: Предыдущий
+next: Следующий
+read_more: Читать далее
+
+# Search functionality
+search_placeholder: Введите для поиска...
+search_no_results: Результаты не найдены
+search_result: результат
+search_results: результаты
+search_results_found: Найдено %s результатов
+search_in: Искать в
+search_in_title: Заголовок
+search_in_content: Содержание
+search_in_tags: Теги
+search_in_categories: Категории
+search_filters: Фильтры поиска
+search_recent: Недавние поиски
+search_clear: Очистить
+search_loading: Загрузка...
+search_error: Ошибка загрузки данных поиска

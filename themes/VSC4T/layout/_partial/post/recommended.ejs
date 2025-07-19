@@ -1,0 +1,75 @@
+<% 
+function getRecommended(currentPost, count = 3) {
+  let recommended = [];
+  
+  // 获取同系列文章
+  if (currentPost.series) {
+    recommended = recommended.concat(
+      site.posts.filter(post => 
+        post.series === currentPost.series && 
+        post.path !== currentPost.path
+      ).limit(2).toArray()
+    );
+  }
+  
+  // 获取同标签文章
+  if (currentPost.tags && currentPost.tags.length) {
+    let tagPosts = [];
+    currentPost.tags.forEach(tag => {
+      tagPosts = tagPosts.concat(
+        tag.posts.filter(post => 
+          post.path !== currentPost.path &&
+          !recommended.includes(post)
+        ).toArray()
+      );
+    });
+    recommended = recommended.concat(tagPosts);
+  }
+  
+  // 如果还不够，添加最新文章
+  if (recommended.length < count) {
+    recommended = recommended.concat(
+      site.posts.filter(post => 
+        post.path !== currentPost.path &&
+        !recommended.includes(post)
+      ).limit(count - recommended.length).toArray()
+    );
+  }
+  
+  return recommended.slice(0, count);
+}
+
+const recommendedPosts = getRecommended(page);
+%>
+
+<% if (recommendedPosts.length > 0) { %>
+<div class="recommended-posts">
+  <div class="recommended-header">
+    <i class="fas fa-lightbulb"></i> 推荐阅读
+  </div>
+  <div class="recommended-list">
+    <% recommendedPosts.forEach(function(post) { %>
+      <div class="recommended-item">
+        <a href="<%- url_for(post.path) %>" class="recommended-link">
+          <div class="recommended-title">
+            <i class="fas fa-file-code"></i>
+            <%= post.title %>
+          </div>
+          <div class="recommended-meta">
+            <% if (post.series) { %>
+              <span class="series-tag">
+                <i class="fas fa-bookmark"></i>
+                <%= post.series %>
+              </span>
+            <% } %>
+            <span class="date-tag">
+              <i class="fas fa-calendar"></i>
+              <%= date(post.date, 'YYYY-MM-DD') %>
+            </span>
+          </div>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+</div>
+<% } %>
