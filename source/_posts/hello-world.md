@@ -1,8 +1,16 @@
 ---
-title: 红米k40刷机教程
+title: [技术向]红米K40的刷机Root教程
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
+  --前言：刷机有风险，救砖最危险 ；耐心刷机最舒适，半途而废不可取
+一.刷机所需要的工具
 
+1.[搞机助手-官网 (lsdy.top)](https://lsdy.top/gjzs)
+
+2.[Magisk安装教程 - Magisk中文网 (magiskcn.com)](https://magiskcn.com/)
+
+3.[申请解锁小米手机 (miui.com).](https://www.miui.com/unlock/index.html)
+
+4. [Xiaomi Redmi K40/POCO F3/Mi 11X (twrp.me)*](https://twrp.me/xiaomi/xiaomi_redmik40_pocof3_mi11x.html)
 ## Quick Start
 
 ### Create a new post
