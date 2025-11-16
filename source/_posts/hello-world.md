@@ -11,36 +11,97 @@ title: [技术向]红米K40的刷机Root教程
 3.[申请解锁小米手机 (miui.com).](https://www.miui.com/unlock/index.html)
 
 4. [Xiaomi Redmi K40/POCO F3/Mi 11X (twrp.me)*](https://twrp.me/xiaomi/xiaomi_redmik40_pocof3_mi11x.html)
-## Quick Start
 
-### Create a new post
+防止外面找被加料，请使用我提供的链接下载
 
-``` bash
-$ hexo new "My New Post"
-```
+二.在手机上为解锁做准备
 
-More info: [Writing](https://hexo.io/docs/writing.html)
+1.进入设置
 
-### Run server
+2.点击“我的设备”
 
-``` bash
-$ hexo server
-```
+3.点击“全部参数与信息”
 
-More info: [Server](https://hexo.io/docs/server.html)
+4.连续“点击MIUI版本”7次以上即可
 
-### Generate static files
+5.然后回到设置主页
 
-``` bash
-$ hexo generate
-```
+6.往下滑找到“更多设置”
 
-More info: [Generating](https://hexo.io/docs/generating.html)
+7.继续往下滑找到“开发者选项”
 
-### Deploy to remote sites
+8.进入“开发者选项”后打开“OEM解锁”并点击“设备解锁状态”绑定你的设备
 
-``` bash
-$ hexo deploy
-```
+9.继续往下滑打开“USB调试”和“USB调试（安全设置）”
 
-More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+这样我们就为自己的设备刷机做好准备了
+
+三.电脑环境设置
+
+       -电脑下载我上面所提及的“搞机助手”打开后点击“扩展功能”
+
+        -找到安卓驱动，点击到浏览器下载
+
+        -下载完成后解压压缩包安装驱动并重启windows系统
+
+这样子就完成了所有的前提啦
+
+四.解锁bootloader
+
+注意：记得备份你的数据再来解锁
+
+        1.将手机关机
+
+        2.然后长按“音量-键”和“开/关机键”进入“fastboot”
+
+        3.接上电脑然后开始在电脑操作
+
+        4.打开“miflash_unlock.exe”
+
+        5.在“miflash”登录你的小米账号同意免责声明后点击解锁即可
+
+        (如果提示你解锁失败的话，那就说明你设备绑定时间太短，请等7天后再次进入软件解锁)
+
+          解锁成功后就可以刷入一些你想修改的东西啦
+
+五.twrp刷入
+
+        1.长按“音量-键”和“开/关机键”进入“fastboot”
+
+        2.打开“搞机助手”进入“引导模式”
+
+        3.点击“刷入REC”并选择你所下载的“twrp”进行刷入即可
+
+        六.Magisk刷入
+
+        1.刷入成功后它会提示你是否要进入你所刷的rec，点击确认然后进入
+
+        2.下载Magisk
+
+        3.将后缀.apk改为.zip
+
+        4.在“搞机助手”点击“恢复模式”
+
+        5.点击“推送文件”
+
+        6.推送你刚才更改后缀的文件
+
+        7.在手机上点击“安装”(如果没有进入twrp，那么进入twrp后再来进行这一项)
+
+        8.选择你刚才多推送的文件
+
+        9.选择后刷入即可
+
+        10.将手机重启进入系统后继续用“搞机助手”安装“Magisk.apk”
+
+                 a.如果没有打开usb调试请重复第二大步后继续进行
+
+                 b.将刚才所修改的后缀改为之前的.apk再来执行此步骤
+
+        这样子就root成功啦
+
+        (如果提示说要修复环境的话，点击修复即可)
+
+ 
+
+        这台机子的刷机就告一段落啦，后续我会继续提供更多教程给大家
