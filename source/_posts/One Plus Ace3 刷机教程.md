@@ -32,6 +32,6 @@ date: "2025-12-17"
         fastboot flash recovery <你的twrp文件地址>
 
 5.使用柚坛工具箱同步ab分区
-    ![截图](/source/_posts/One%20Plus%20Ace3%20刷机教程/1.png)
+    ![截图](/source/images/1.png)
 
 这样子就不担心刷机后变砖了
