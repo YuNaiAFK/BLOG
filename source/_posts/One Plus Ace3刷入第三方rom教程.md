@@ -1,6 +1,6 @@
 ---
 title: One Plus Ace3的刷机教程
-date: "2025-12-17"
+date: "2025-12-24"
 ---
 
 # 以One Plus ace3刷入pixel OS为例
@@ -14,4 +14,6 @@ date: "2025-12-17"
 2.[TWRP](https://w2g0p-my.sharepoint.com/:u:/g/personal/shiroko_w2g0p_onmicrosoft_com/IQAOCAsdA0chRZTa0EQ63pHBARQRiZkKUnbXEUBelg59S0A?e=ovC5oW)
 
 3.[柚坛工具箱](https://w2g0p-my.sharepoint.com/:f:/g/personal/shiroko_w2g0p_onmicrosoft_com/IgBctMU_L8vzQb7n01O3yg-aAa2iADWxtFK_OGaz2pymzms?e=uZ8wA1)
+
+4.[Pixel OS](https://pixelos.net/download/aston)
 
