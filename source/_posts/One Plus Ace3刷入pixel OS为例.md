@@ -20,4 +20,17 @@ date: "2025-12-24"
 
 二，操作流程
 
-1.
+1.重启手机至bootloader
+
+2.分别刷入boot, init_boot, vendor_boot, dtbo and recovery images
+    fastboot flash boot boot.img
+    fastboot flash init_boot init_boot.img
+    fastboot flash vendor_boot vendor_boot.img
+    fastboot flash dtbo dtbo.img
+    fastboot flash recovery recovery.img
+
+3.刷入成功后重启到recovery，在recovery模式中进行sideload（卡刷）
+
+    adb sideload PixelOS*.zip
+
+4.刷完后格式化data分区的数据，然后重启即可
