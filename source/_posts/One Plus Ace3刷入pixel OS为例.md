@@ -18,6 +18,8 @@ date: "2025-12-24"
 
 4.[Pixel OS](https://pixelos.net/download/aston)
 
+5.[所需的img文件](https://w2g0p-my.sharepoint.com/:f:/g/personal/shiroko_w2g0p_onmicrosoft_com/IgClX4MATfpoQYkRyTU1h2SYAdbnfekvp-5081W3bh_N-ls?e=POXMdh)
+
 二，操作流程
 
 1.重启手机至bootloader
