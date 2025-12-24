@@ -25,6 +25,7 @@ date: "2025-12-24"
 1.重启手机至bootloader
 
 2.分别刷入boot, init_boot, vendor_boot, dtbo and recovery images
+
     fastboot flash boot boot.img
     fastboot flash init_boot init_boot.img
     fastboot flash vendor_boot vendor_boot.img
